@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { CanActivateFn, Router, Routes } from '@angular/router';
+import { inject } from '@angular/core';
 import { BankingComponent } from './banking.component';
 import { DefaultComponent } from './pages/default.component';
 import { DepositComponent } from './pages/deposit.component';
@@ -35,3 +36,14 @@ export const BANKING_ROUTES: Routes = [
     ],
   },
 ];
+
+function withdrawGuard(): CanActivateFn {
+  return () => {
+    const store = inject(BankingStore);
+    const router = inject(Router);
+    return (
+      store.withdrawalAvailable() ||
+      router.createUrlTree(['banking', 'dashboard'])
+    );
+  };
+}

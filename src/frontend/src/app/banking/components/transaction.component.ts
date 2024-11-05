@@ -8,9 +8,9 @@ import { Component, ChangeDetectionStrategy, input, output } from '@angular/core
   template: `
     <div>
       <input #amount type="number" class="input input-bordered" />
-      <button
-            (click)="doTransaction(amount)"
-            class="btn btn-primary">{{buttonLabel()}}</button>
+      <button (click)="doTransaction(amount)" class="btn btn-primary">
+        {{ buttonLabel() }}
+      </button>
     </div>
   `,
   styles: ``,
@@ -20,5 +20,5 @@ export class TransactionComponent {
   transactionHappened = output<number>();
   doTransaction(amount: HTMLInputElement) {
     this.transactionHappened.emit(amount.valueAsNumber);
- }
+  }
 }
