@@ -1,28 +1,19 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
-import { TransactionComponent } from './components/transaction.component';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-banking',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CurrencyPipe, TransactionComponent],
+  imports: [RouterOutlet],
   template: `
-    <p>Banking Stuff</p>
-    <p>Your Current Balance is {{ balance() | currency }}</p>
-    <app-banking-transaction (transactionHappened)="doDeposit($event)" buttonLabel="Deposit" />
-    <app-banking-transaction (transactionHappened)="doWithdrawal($event)" buttonLabel="Withdrawal" />
+    <div>
+      Balance Summary
+    </div>
+    <router-outlet />
   `,
   styles: ``,
 })
 export class BankingComponent {
-  balance = signal(0);
 
-  doWithdrawal(amount: number) {
-    this.balance.update((b) => b - amount);
-  }
-
-  doDeposit(amount: number) {
-    this.balance.update((b) => b + amount);
-  }
 }
