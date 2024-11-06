@@ -11,4 +11,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./banking/banking.routes').then((b) => b.BANKING_ROUTES),
   },
+  {
+    path: 'counter',
+    loadChildren: () =>
+      import('./counter/counter.routes').then((b) => b.COUNTER_ROUTES),
+  },
 ];
