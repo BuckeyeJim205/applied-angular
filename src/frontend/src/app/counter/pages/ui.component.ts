@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { CounterStore } from '../services/counter.store';
 
 @Component({
   standalone: true,
@@ -6,44 +7,14 @@ import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
   imports: [],
   template: `
     <div data-testid="counter-feature-ui">
-      <button [disabled]="shouldDisable()" class="btn btn-primary" (click)="decrementCounter()">-</button>
-      <span data-testid="current">{{counterValue()}}</span>
-      <button class="btn btn-primary" (click)="incrementCounter()">+</button>
+      <button [disabled]="store.decrementDisabled()" class="btn btn-primary" (click)="store.decrement()">-</button>
+      <span data-testid="current">{{store.current()}}</span>
+      <button class="btn btn-primary" (click)="store.increment()">+</button>
     </div>
-    <div data-testid="fizzBuzz">{{fizzBuzz()}}</div>
+    <div data-testid="fizzBuzz">{{store.fizzBuzz()}}</div>
   `,
   styles: ``,
 })
 export class UiComponent {
-    counterValue = signal(0);
-    
-    incrementCounter() {
-        this.counterValue.update((b) => b + 1);
-    }
-
-    decrementCounter() {
-        this.counterValue.update((b) => b - 1);
-    }
-
-    shouldDisable() {
-        return this.counterValue() === 0;
-    }
-
-    fizzBuzz() {
-        if (this.counterValue() === 0) {
-            return '';
-        }
-        else if (this.counterValue() % 3 === 0 && this.counterValue() % 5 === 0) {
-            return 'FizzBuzz';
-        }
-        else if (this.counterValue() % 3 === 0) {
-            return 'Fizz';
-        }
-        else if (this.counterValue() % 5 === 0) {
-            return 'Buzz';
-        }
-        else {
-            return '';
-        }
-    }
+    store = inject(CounterStore);
 }
