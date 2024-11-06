@@ -1,16 +1,19 @@
-import { Routes } from "@angular/router";
-import { DemosComponent } from "./demos.component";
-import { ChangeDetectionComponent } from "./components/change-detection.components";
- 
+
+import { Routes } from '@angular/router';
+import { DemosComponent } from './demos.component';
+import { ChangeDetectionComponent } from './components/change-detection.components';
+import { BankingService } from '../banking/services/banking.service';
+
 export const DEMOS_ROUTES: Routes = [
-    {
-        path: '',
-        component: DemosComponent,
-        children: [
-            {
-                path: 'change-detection',
-                component: ChangeDetectionComponent
-            }
-        ]
-    }
-]
+  {
+    path: '', // demos
+    component: DemosComponent,
+
+    children: [
+      {
+        path: 'change-detection', // demos/change-detection
+        component: ChangeDetectionComponent,
+      },
+    ],
+  },
+];

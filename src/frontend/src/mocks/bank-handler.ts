@@ -1,5 +1,5 @@
 import { HttpResponse, delay, http } from 'msw';
- 
+
 type ApiResponseItem = {
   ibnTxLsn: string;
   amount: number;
@@ -13,7 +13,7 @@ const initialState: ApiResponseItem[] = [
     type: 'deposit',
     postedOn: new Date(1729623072771).toISOString(),
   },
- 
+
   {
     ibnTxLsn: '60358a6d-1c38-49df-ba05-48b77015a28f',
     amount: 15.23,
@@ -39,7 +39,7 @@ const initialState: ApiResponseItem[] = [
     postedOn: new Date(1729623095591).toISOString(),
   },
 ];
- 
+
 const handlers = [
   http.get(
     'http://fake-api.bankohypertheory.com/user/statements/:year/:month',
@@ -54,14 +54,14 @@ const handlers = [
         transactions: initialState,
       };
       return HttpResponse.json(response);
-    }
+    },
   ),
   http.post(
     'http://fake-api.bankohypertheory.com/user/deposits',
     async ({ request }) => {
       await delay(5000);
       const body = (await request.json()) as unknown as { amount: number };
- 
+
       const newTransaction = {
         ibnTxLsn: crypto.randomUUID(),
         amount: body.amount,
@@ -71,10 +71,10 @@ const handlers = [
       if (body.amount === 420.69) {
         throw new Error('blamma');
       }
- 
+
       return HttpResponse.json(newTransaction);
-    }
+    },
   ),
 ];
- 
+
 export default handlers;

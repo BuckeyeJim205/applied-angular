@@ -6,12 +6,13 @@ import { DepositComponent } from './pages/deposit.component';
 import { WithdrawComponent } from './pages/withdraw.component';
 import { StatementComponent } from './pages/statement.component';
 import { BankingStore } from './services/banking.store';
+import { BankingService } from './services/banking.service';
 
 export const BANKING_ROUTES: Routes = [
   {
     path: '',
     component: BankingComponent,
-    providers: [BankingStore],
+    providers: [BankingStore, BankingService],
     children: [
       {
         path: 'dashboard',
@@ -24,6 +25,7 @@ export const BANKING_ROUTES: Routes = [
       {
         path: 'withdraw',
         component: WithdrawComponent,
+        canActivate: [withdrawGuard()],
       },
       {
         path: 'statement',
