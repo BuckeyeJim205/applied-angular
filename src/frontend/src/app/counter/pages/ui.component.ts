@@ -1,15 +1,16 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { DecrementButtonDirective, IncrementButtonDirective } from '@shared';
 import { CounterStore } from '../services/counter.store';
 
 @Component({
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
+  imports: [DecrementButtonDirective, IncrementButtonDirective],
   template: `
     <div data-testid="counter-feature-ui">
-      <button [disabled]="store.decrementDisabled()" class="btn btn-primary" (click)="store.decrement()">-</button>
+      <button appDecrementButton [disabled]="store.decrementDisabled()" (click)="store.decrement()">-</button>
       <span data-testid="current">{{store.current()}}</span>
-      <button class="btn btn-primary" (click)="store.increment()">+</button>
+      <button appIncrementButton (click)="store.increment()">+</button>
     </div>
     <div data-testid="fizzBuzz">{{store.fizzBuzz()}}</div>
   `,
